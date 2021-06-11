@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/heath.tscn" type="PackedScene" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -11,13 +10,6 @@ extents = Vector2( 32.0747, 34.6842 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 351.331, 136.087 )
-
-[node name="heath" parent="player" instance=ExtResource( 2 )]
-margin_left = -341.908
-margin_top = -194.158
-margin_right = -341.908
-margin_bottom = -194.158
-rect_scale = Vector2( 0.5, 0.5 )
 
 [node name="TestFloor" type="StaticBody2D" parent="."]
 
