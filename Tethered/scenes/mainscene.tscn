@@ -10,13 +10,13 @@ extents = Vector2( 32.0747, 34.6842 )
 [node name="mainscene" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 351.331, 136.087 )
+position = Vector2( 362.774, 168.656 )
 
 [node name="heath" parent="player" instance=ExtResource( 2 )]
-margin_left = -172.796
-margin_top = -102.76
-margin_right = -172.796
-margin_bottom = -102.76
+margin_left = -186.763
+margin_top = -113.612
+margin_right = -186.763
+margin_bottom = -113.612
 
 [node name="TestFloor" type="StaticBody2D" parent="."]
 
