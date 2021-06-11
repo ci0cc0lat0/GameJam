@@ -1,5 +1,5 @@
 extends KinematicBody2D
-
+export (int) var HP = 100
 export (int) var acceleration = 40 
 export (int) var maxSpeed = 300
 export (int) var gravity = 35
@@ -21,7 +21,18 @@ func movement(delta):
 		velocity.y = jumpForce
 	
 	velocity = move_and_slide(velocity)
+
+func updateUI():
+	var hitbox = get_node("/root/mainscene/player/heath/hitbox")
+	var health_bar = get_node("/root/mainscene/player/heath/heathBar")
+	var damageTick = 5
 	
+	hitbox.get_shape().set_extents(Vector2(hitbox.get_shape().extents.x-damageTick *2, hitbox.get_shape().extents.y))
+	hitbox.position.x -= damageTick *2
+	health_bar.value -= damageTick
+func takeDamage():
+	HP -= 5;
+	print(HP)	
 func realMovement(delta):
 	velocity.y += + gravity
 	if velocity.y > maxFallSpeed:

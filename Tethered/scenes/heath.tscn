@@ -24,7 +24,7 @@ margin_left = -4.63293
 margin_top = 1.85315
 margin_right = 395.367
 margin_bottom = 46.8531
-value = 50.0
+value = 100.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 1 )
 __meta__ = {
@@ -37,6 +37,6 @@ __meta__ = {
 autostart = true
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
-position = Vector2( 195.367, -30.1469 )
+position = Vector2( 200, 25 )
 shape = SubResource( 1 )
 [connection signal="timeout" from="Timer" to="." method="on_Timer_timeout"]
