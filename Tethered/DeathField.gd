@@ -15,12 +15,7 @@ func _ready():
 #func _process(delta):
 #	pass
 
- 
-func _on_enemy__body_entered(body):
+
+func _on_DeathField_body_entered(body):
 	if body.name == "player":
-		body.updateUI()
-		body.takeDamage()
-		
-		
-	
-		
+		body.die()

@@ -35,8 +35,10 @@ func updateUI():
 func takeDamage():
 	HP -= 5;
 	print(HP)	
-func die():
 	if HP <= 0:
+		die()
+		
+func die():
 		get_tree().reload_current_scene()
 		var hitbox = get_node("/root/mainscene/player/heath/hitbox")
 		hitbox.get_shape().set_extents(Vector2(200,27.162))
@@ -70,6 +72,5 @@ func realMovement(delta):
 	
 func _physics_process(delta):
 	stateChoice()
-	
 	realMovement(delta)
-	die()
+	
