@@ -1,13 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/LargeAttack.png" type="Texture" id=1]
 [ext_resource path="res://scenes/player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/heath.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/chain.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.8689, 11.9903 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 resource_name = "attack"
 length = 0.4
 loop = true
@@ -24,7 +25,7 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 resource_name = "grab"
 length = 0.5
 loop = true
@@ -41,8 +42,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 5, 6 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
+[sub_resource type="Animation" id=4]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -57,8 +57,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "jump"
+[sub_resource type="Animation" id=5]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -74,8 +73,7 @@ tracks/0/keys = {
 "values": [ 16 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "move"
+[sub_resource type="Animation" id=6]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -107,8 +105,8 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-vframes = 5
 hframes = 4
+vframes = 5
 frame = 8
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -116,8 +114,29 @@ offset = Vector2( 0, -40 )
 current = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attack = SubResource( 5 )
-anims/grab = SubResource( 6 )
-anims/idle = SubResource( 2 )
-anims/jump = SubResource( 3 )
-anims/move = SubResource( 4 )
+anims/attack = SubResource( 2 )
+anims/grab = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/jump = SubResource( 5 )
+anims/move = SubResource( 6 )
+
+[node name="Position2D" type="Position2D" parent="."]
+
+[node name="Particles2D" type="CPUParticles2D" parent="Position2D"]
+position = Vector2( -100.75, -105 )
+rotation = 1.24966
+amount = 12
+lifetime = 0.35
+speed_scale = 0.3
+texture = ExtResource( 4 )
+emission_shape = 1
+emission_sphere_radius = 9.02
+spread = 0.0
+gravity = Vector2( 0, 200 )
+initial_velocity = 408.38
+orbit_velocity = 0.4
+damping = 100.0
+angle = 105.5
+angle_random = 1.0
+scale_amount = 1.1
+scale_amount_random = 1.0
