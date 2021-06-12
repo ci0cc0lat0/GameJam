@@ -1,26 +1,32 @@
 extends Area2D
 
+export var speed = 100
+export var moveDistance = 100
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+onready var startX = position.x 
+onready var targetX = position.x + moveDistance
 
+func _process(delta):
+	position.x = move_to(position.x, targetX, speed*delta)
+	if position.x == targetX:
+		if targetX == startX:
+			targetX = position.x+ moveDistance
+		else:
+			targetX = startX
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func move_to(current, to, step):
+	var new = current
+	if new < to: 
+		new += step
+		if new > to:
+			new = to
+	else:
+		new -= step
+		if new < to:
+			new = to
+	return new
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
- 
 func _on_enemy__body_entered(body):
 	if body.name == "player":
 		body.updateUI()
 		body.takeDamage()
-		
-		
-	
-		

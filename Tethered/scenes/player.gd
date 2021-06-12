@@ -13,6 +13,9 @@ var STATE = UIMODE
 var LASTSTATE = 0
 enum {UIMODE, HEALMODE,SWORDMODE, SHIELDMODE, PLACEMODE, THROWMODE}
 
+var ATTACKSTATE = IDLE
+enum {IDLE, ATTACK}
+
 func stateChoice():
 	if Input.is_action_just_pressed("heal"):
 		STATE = HEALMODE
@@ -23,6 +26,10 @@ func stateChoice():
 	if Input.is_action_just_pressed("shield"):
 		STATE = SHIELDMODE
 		print(STATE)
+	if Input.is_action_just_pressed("attackmode"):
+		ATTACKSTATE = ATTACK
+		$AnimationPlayer.play("attack")
+		print(ATTACKSTATE)
 	
 
 func updateUI():
@@ -61,12 +68,14 @@ func realMovement(delta):
 		$AnimationPlayer.play("move")
 	else:
 		velocity.x = lerp(velocity.x,0,0.2)
-		$AnimationPlayer.play("idle")
+		#$AnimationPlayer.play("idle")
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = -jumpForce
 	else:
 		$AnimationPlayer.play("jump")
+		
+
 	velocity.x = clamp(velocity.x, - maxSpeed, maxSpeed)
 	velocity = move_and_slide(velocity,up)
 	
@@ -74,3 +83,9 @@ func _physics_process(delta):
 	stateChoice()
 	realMovement(delta)
 	
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	ATTACKSTATE = IDLE
+	$AnimationPlayer.stop()
+
