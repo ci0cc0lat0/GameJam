@@ -7,20 +7,23 @@ export (int) var jumpForce = 600
 export (int) var maxFallSpeed = 1000
 var up = Vector2(0,-1)
 var velocity = Vector2.ZERO
+var facingRight = true
 
-func movement(delta):
-	var direction = Vector2.ZERO
-	direction .x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	direction = direction.normalized()
-	velocity.y = velocity.y + gravity
-	if direction != Vector2.ZERO:
-		velocity = velocity.move_toward(direction*maxSpeed,acceleration*delta)
-	else:
-		velocity = velocity.move_toward(Vector2.ZERO, acceleration*delta)
-	if Input.is_action_just_pressed("jump"):
-		velocity.y = jumpForce
+var STATE = UIMODE
+var LASTSTATE = 0
+enum {UIMODE, HEALMODE,SWORDMODE, SHIELDMODE, PLACEMODE, THROWMODE}
+
+func stateChoice():
+	if Input.is_action_just_pressed("heal"):
+		STATE = HEALMODE
+		print(STATE)
+	if Input.is_action_just_pressed("attackMode"):
+		STATE = SWORDMODE
+		print(STATE)
+	if Input.is_action_just_pressed("shield"):
+		STATE = SHIELDMODE
+		print(STATE)
 	
-	velocity = move_and_slide(velocity)
 
 func updateUI():
 	var hitbox = get_node("/root/mainscene/player/heath/hitbox")
@@ -32,28 +35,41 @@ func updateUI():
 func takeDamage():
 	HP -= 5;
 	print(HP)	
-
 func die():
 	if HP <= 0:
 		get_tree().reload_current_scene()
 		var hitbox = get_node("/root/mainscene/player/heath/hitbox")
 		hitbox.get_shape().set_extents(Vector2(200,27.162))
+		
 func realMovement(delta):
+	if facingRight == true:
+		$Sprite.scale.x = 1
+	else:
+		$Sprite.scale.x = -1
 	velocity.y += + gravity
 	if velocity.y > maxFallSpeed:
 		velocity.y = maxFallSpeed
 	if Input.is_action_pressed("right"):
+		facingRight = true
 		velocity.x += acceleration
+		$AnimationPlayer.play("move")
 	elif Input.is_action_pressed("left"):
+		facingRight= false
 		velocity.x -= acceleration
+		$AnimationPlayer.play("move")
 	else:
 		velocity.x = lerp(velocity.x,0,0.2)
+		$AnimationPlayer.play("idle")
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = -jumpForce
+	else:
+		$AnimationPlayer.play("jump")
 	velocity.x = clamp(velocity.x, - maxSpeed, maxSpeed)
 	velocity = move_and_slide(velocity,up)
 	
 func _physics_process(delta):
+	stateChoice()
+	
 	realMovement(delta)
 	die()

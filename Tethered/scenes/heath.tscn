@@ -38,6 +38,7 @@ __meta__ = {
 autostart = true
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 200, 25 )
 shape = SubResource( 1 )
 
