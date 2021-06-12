@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://assets/LargeAttack.png" type="Texture" id=1]
+[ext_resource path="res://assets/LARGE3.png" type="Texture" id=1]
 [ext_resource path="res://scenes/player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/heath.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/chain.png" type="Texture" id=4]
@@ -9,9 +9,8 @@
 extents = Vector2( 15.8689, 11.9903 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "attack"
-length = 0.4
-loop = true
+resource_name = "SwordShove"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -19,14 +18,28 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 8, 9, 10, 11 ]
+"values": [ 17, 18, 19, 20, 21, 0 ]
 }
 
 [sub_resource type="Animation" id=3]
-resource_name = "grab"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 9, 10, 11, 0 ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -42,7 +55,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 5, 6 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -57,7 +70,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -73,9 +86,8 @@ tracks/0/keys = {
 "values": [ 16 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.4
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -105,20 +117,20 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-hframes = 4
 vframes = 5
-frame = 8
+hframes = 5
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 0, -40 )
 current = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attack = SubResource( 2 )
-anims/grab = SubResource( 3 )
-anims/idle = SubResource( 4 )
-anims/jump = SubResource( 5 )
-anims/move = SubResource( 6 )
+anims/SwordShove = SubResource( 2 )
+anims/attack = SubResource( 3 )
+anims/grab = SubResource( 4 )
+anims/idle = SubResource( 5 )
+anims/jump = SubResource( 6 )
+anims/move = SubResource( 7 )
 
 [node name="Position2D" type="Position2D" parent="."]
 
@@ -140,3 +152,10 @@ angle = 105.5
 angle_random = 1.0
 scale_amount = 1.1
 scale_amount_random = 1.0
+
+[node name="SwordShoveSpawnLeft" type="Position2D" parent="."]
+position = Vector2( -45.4269, 12.5831 )
+
+[node name="SwordShoveSpawnRight" type="Position2D" parent="."]
+position = Vector2( 45.427, 12.583 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
