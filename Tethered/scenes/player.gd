@@ -26,13 +26,18 @@ func updateUI():
 	var hitbox = get_node("/root/mainscene/player/heath/hitbox")
 	var health_bar = get_node("/root/mainscene/player/heath/heathBar")
 	var damageTick = 5
-	
 	hitbox.get_shape().set_extents(Vector2(hitbox.get_shape().extents.x-damageTick *2, hitbox.get_shape().extents.y))
 	hitbox.position.x -= damageTick *2
 	health_bar.value -= damageTick
 func takeDamage():
 	HP -= 5;
 	print(HP)	
+
+func die():
+	if HP <= 0:
+		get_tree().reload_current_scene()
+		var hitbox = get_node("/root/mainscene/player/heath/hitbox")
+		hitbox.get_shape().set_extents(Vector2(200,27.162))
 func realMovement(delta):
 	velocity.y += + gravity
 	if velocity.y > maxFallSpeed:
@@ -51,3 +56,4 @@ func realMovement(delta):
 	
 func _physics_process(delta):
 	realMovement(delta)
+	die()

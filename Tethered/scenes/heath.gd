@@ -1,6 +1,6 @@
 extends Control
-onready var damageTick = 5
 
+onready var damageTick = 5
 onready var timer = get_node("Timer")
 onready var hitbox = get_node("hitbox")
 onready var health_bar = get_node("heathBar")
